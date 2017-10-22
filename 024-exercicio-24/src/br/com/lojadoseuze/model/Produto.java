@@ -59,5 +59,10 @@ public class Produto {
 	public Produto() {
 		super();
 	}
+	
+	public void imprimir() {
+		String texto = String.format("#%s %s (%s) ------ R$ %.2f", codigo, nome, categoria, preco);
+		System.out.println(texto);
+	}
 
 }
