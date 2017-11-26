@@ -8,7 +8,6 @@ import br.com.ciladalogistica.model.Destinatario;
 import br.com.ciladalogistica.model.Endereco;
 import br.com.ciladalogistica.model.Entrega;
 import br.com.ciladalogistica.model.Motorista;
-import br.com.ciladalogistica.repository.MotoristaRepository;
 
 public class CiladaApplication {
 
@@ -16,7 +15,7 @@ public class CiladaApplication {
 
 	public static void main(String[] args) {
 		Motorista bino = new Motorista("116633", "Bino", 4500f);
-		Motorista cino = new Motorista("126734", "Cino", 2000f);
+		// Motorista cino = new Motorista("126734", "Cino", 2000f);
 
 		/*
 		 * motoristas.addMotorista(bino); motoristas.addMotorista(cino);
