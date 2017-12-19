@@ -99,3 +99,62 @@ VALUES ('Twitter', 'twitter.com/guifon',
 SELECT con.titulo, con.valor
 FROM cliente cli JOIN contato con ON cli.id = con.id_cliente
 WHERE cli.cpf = 11133322244;
+
+CREATE TABLE produto (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL,
+    preco FLOAT NOT NULL
+);
+
+SELECT * FROM produto
+WHERE preco <= 100;
+
+SELECT * FROM produto
+WHERE nome LIKE '%Pen Drive%';
+
+INSERT INTO produto (nome, preco) VALUES 
+('Iphone X', 8000.00), 
+('Pen Drive 64GB', 40.00),
+('Roteador', 90.00);
+
+INSERT INTO produto (nome, preco) VALUES 
+('Pen Drive 32GB', 25.00);
+
+CREATE TABLE compra (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    dataCompra DATE,
+    idCliente INT NOT NULL,
+    FOREIGN KEY (idCliente) REFERENCES cliente(id)
+);
+
+CREATE TABLE itemDaCompra (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    quantidade INT NOT NULL,
+    idProduto INT NOT NULL,
+    FOREIGN KEY (idProduto) REFERENCES produto(id)
+);
+
+ALTER TABLE itemDaCompra
+ADD COLUMN idCompra INT;
+
+ALTER TABLE itemDaCompra
+MODIFY COLUMN idCompra INT NOT NULL;
+
+INSERT INTO compra (dataCompra, idCliente)
+VALUES ('2017-12-18', (SELECT id FROM cliente
+WHERE nome = 'João da Silva'));
+
+SELECT * FROM compra;
+
+SELECT * FROM itemDaCompra;
+
+INSERT INTO itemDaCompra (quantidade, idProduto, idCompra) VALUES
+(2, (SELECT id FROM produto WHERE nome = 'Iphone X'), 1),
+(1, (SELECT id FROM produto WHERE nome = 'Roteador'), 1);
+
+SELECT SUM(i.quantidade * p.preco) AS 'Valor Total'
+FROM compra c 
+INNER JOIN itemDaCompra i ON c.id = i.idCompra
+INNER JOIN produto p ON i.idProduto = p.id
+WHERE c.id = 1;
+
