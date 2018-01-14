@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  	<head>
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <title>Cadastro de Tarefa</title>
+		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet">
+  	</head>
+  	<body>
+  		<div class="container">
+  			<h1>Cadastro de Tarefa</h1>
+  			<form class="form" th:object="${tarefa}" th:action="@{/tarefas/salvar}" method="post">
+  				<input type="hidden" th:field="*{id}">
+  				<div class="form-group">
+  					<label for="descricao">Descrição</label>
+  					<textarea class="form-control" th:field="*{descricao}"></textarea>
+  				</div>
+  				<button class="btn btn-success" type="submit">Salvar</button>
+  			</form>
+  		</div>
+  		
+  		
+	  	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+  	</body>
+</html>
