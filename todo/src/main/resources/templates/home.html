@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security4">
   	<head>
 	    <meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +7,13 @@
 	    <title>Home</title>
 		<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet">
   		<style>
+  			.tarefa-concluida-texto {
+    			text-decoration: line-through;
+  			}
+  			
   			.tarefa-concluida {
   				color: #c3c3c3;
-    			text-decoration: line-through;
+  				font-style: italic;
   			}
   		</style>
   	</head>
@@ -18,7 +22,17 @@
   			<div class="row">
   				<div class="col-sm-12">
   					<h1 id="titulo">Olá</h1>
-  					<a class="btn btn-primary" th:href="@{/tarefas/cadastro}">Nova Tarefa</a>
+  					<a sec:authorize="hasRole('ADMIN')" class="btn btn-primary" th:href="@{/tarefas/cadastro}">Nova Tarefa</a>
+  				</div>
+  			</div>
+  			
+  			<div class="row">
+  				<div class="col-sm-12">
+  					Logged user: <span sec:authentication="name"></span><br>
+					Roles: <span>[[${#httpServletRequest.remoteUser}]]</span>
+  					<form th:action="@{/logout}" method="post">
+            			<input type="submit" value="Sign Out"/>
+        			</form>
   				</div>
   			</div>
   			
@@ -26,9 +40,9 @@
   				<div class="col-sm-6">
   					<ul class="list-group">
 		  				<li class="list-group-item" th:each="t : ${tarefas}">
-		  					<span th:classappend="${t.concluida != null ? 'tarefa-concluida' : ''}">[[${t.descricao}]]</span>
-		  					
-		  					<span class="pull-right">
+		  					<span th:classappend="${t.concluida != null ? 'tarefa-concluida tarefa-concluida-texto' : ''}">[[${t.descricao}]]</span>
+		  					<span th:if="${t.concluida != null}" class="tarefa-concluida">[[${#temporals.format(t.dataFinalizacao, 'dd/MM/yyyy')}]]</span>
+		  					<span class="pull-right" sec:authorize="hasRole('ROLE_ADMIN')">
 		  						<a class="btn btn-primary btn-xs" th:href="@{/tarefas/cadastro/__${t.id}__}"
 		  						data-toggle="tooltip" title="Editar Tarefa">
 		  							<span class="glyphicon glyphicon-pencil"></span>

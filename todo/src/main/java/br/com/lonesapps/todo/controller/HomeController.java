@@ -5,20 +5,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.lonesapps.todo.repository.TarefaRepository;
 
 @Controller
-@RequestMapping("/home")
 public class HomeController {
 
 	@Autowired
 	private TarefaRepository tarefas;
 
-	@GetMapping
+	@GetMapping({ "/", "/home" })
 	public String home(Model model) {
 		model.addAttribute("tarefas", tarefas.findAll());
 		return "home";

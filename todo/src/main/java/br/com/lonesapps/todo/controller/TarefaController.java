@@ -1,8 +1,11 @@
 package br.com.lonesapps.todo.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,16 +32,20 @@ public class TarefaController {
 		return "tarefas/cadastro";
 	}
 	
-	@GetMapping("/concluir/{id}")
-	public String mostrarTelaCadastroTarefa(@PathVariable Long id) {
-		Tarefa tarefa = tarefas.findOne(id);
-		tarefa.setConcluida(true);
+	@PostMapping("/cadastro")
+	public String salvarTarefa(@Valid Tarefa tarefa, BindingResult result) {
+		
+		if(result.hasErrors())
+			return "tarefas/cadastro";
+			
 		tarefas.save(tarefa);
 		return "redirect:/home";
 	}
-
-	@PostMapping("/salvar")
-	public String salvarTarefa(Tarefa tarefa) {
+	
+	@GetMapping("/concluir/{id}")
+	public String mostrarTelaCadastroTarefa(@PathVariable Long id) {
+		Tarefa tarefa = tarefas.findOne(id);
+		tarefa.concluir();
 		tarefas.save(tarefa);
 		return "redirect:/home";
 	}
