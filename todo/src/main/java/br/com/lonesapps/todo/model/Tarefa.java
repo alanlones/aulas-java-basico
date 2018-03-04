@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Tarefa {
 
@@ -23,6 +25,7 @@ public class Tarefa {
 	@NotBlank(message = "A descrição não pode ter apenas espaços em branco")
 	private String descricao;
 
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataFinalizacao;
 
 	private Boolean concluida;

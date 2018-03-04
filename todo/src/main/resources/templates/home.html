@@ -26,22 +26,12 @@
   				</div>
   			</div>
   			
-  			<div class="row">
-  				<div class="col-sm-12">
-  					Logged user: <span sec:authentication="name"></span><br>
-					Roles: <span>[[${#httpServletRequest.remoteUser}]]</span>
-  					<form th:action="@{/logout}" method="post">
-            			<input type="submit" value="Sign Out"/>
-        			</form>
-  				</div>
-  			</div>
-  			
   			<div class="row" style="margin-top: 15px">
   				<div class="col-sm-6">
   					<ul class="list-group">
 		  				<li class="list-group-item" th:each="t : ${tarefas}">
-		  					<span th:classappend="${t.concluida != null ? 'tarefa-concluida tarefa-concluida-texto' : ''}">[[${t.descricao}]]</span>
-		  					<span th:if="${t.concluida != null}" class="tarefa-concluida">[[${#temporals.format(t.dataFinalizacao, 'dd/MM/yyyy')}]]</span>
+		  					<span th:classappend="${t.concluida ? 'tarefa-concluida tarefa-concluida-texto' : ''}">[[${t.descricao}]]</span>
+		  					<span th:if="${t.concluida}" class="tarefa-concluida">[[${#temporals.format(t.dataFinalizacao, 'dd/MM/yyyy')}]]</span>
 		  					<span class="pull-right" sec:authorize="hasRole('ROLE_ADMIN')">
 		  						<a class="btn btn-primary btn-xs" th:href="@{/tarefas/cadastro/__${t.id}__}"
 		  						data-toggle="tooltip" title="Editar Tarefa">

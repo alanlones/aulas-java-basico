@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 
 @SpringBootApplication
 public class TodoApplication {
@@ -18,8 +17,8 @@ public class TodoApplication {
 		return new Java8TimeDialect();
 	}
 
-	@Bean
+	/*@Bean
 	public SpringSecurityDialect securityDialect() {
 		return new SpringSecurityDialect();
-	}
+	}*/
 }
